@@ -31,13 +31,6 @@ jobs:
           php artisan key:generate
 
       - name: Run Laravel tests
-        run: npm run test:laravel
+        run: ./vendor/bin/phpunit
         env:
           APP_ENV: testing
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@master
-        if: failure()
-        with:
-          name: Logs
-          path: ./storage/logs
