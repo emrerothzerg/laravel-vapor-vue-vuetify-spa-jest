@@ -1,11 +1,46 @@
-name: CI
+name: Runs Vue and Laravel tests
+
 on: push
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
       - name: Install modules
         run: npm install
+
+      - name: Run Vue tests
+        run: npm run test:vue
+
+      - name: Run PHPunit testings
+        run: npm run test:laravel
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v1
+        with:
+          path: vendor
+          key: composer-${{ hashFiles('composer.lock') }}
+
+      - name: Run composer install
+        run: composer install -n --prefer-dist
+        env:
+          APP_ENV: testing
+
+      - name: Prepare Laravel Application
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
       - name: Run tests
-        run: npm run test
+        run: npm run test:laravel
+        env:
+          APP_ENV: testing
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@master
+        if: failure()
+        with:
+          name: Logs
+          path: ./storage/logs

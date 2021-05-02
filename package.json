@@ -1,15 +1,15 @@
 {
   "private": true,
   "scripts": {
-    "test:unit": "vue-cli-service test:unit --testMatch ./resources/js/**/*.spec.js",
     "dev": "npm run development",
     "development": "mix",
     "hot": "mix watch --hot",
     "prod": "npm run production",
     "production": "mix --production",
-    "test": "jest",
     "watch": "mix watch",
-    "watch-poll": "mix watch -- --watch-options-poll=1000"
+    "watch-poll": "mix watch -- --watch-options-poll=1000",
+    "test:vue": "jest",
+    "test:laravel": "./vendor/bin/phpunit"
   },
   "dependencies": {
     "vue": "^2.6.12",
