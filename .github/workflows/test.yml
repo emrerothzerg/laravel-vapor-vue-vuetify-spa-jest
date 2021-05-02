@@ -31,6 +31,6 @@ jobs:
           php artisan key:generate
 
       - name: Run Laravel tests
-        run: ./vendor/bin/phpunit
+        run: npm run test:laravel
         env:
           APP_ENV: testing
